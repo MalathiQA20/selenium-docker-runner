@@ -2,8 +2,7 @@ version: "3"
 services:
   hub:
     image: selenium/hub:3.14  
-    ports:
-      - "4444:4444"
+    
   chrome:
     image: selenium/node-chrome:3.14 
     depends_on:
@@ -27,18 +26,8 @@ services:
       - HUB_HOST=hub
       - MODULE=searchmodule.xml
     volumes:
-      - ./search-result1:/usr/share/dockerimage/test-output 
-  searchmodule2:
-    image: malatdocker/selenium-docker
-    depends_on:
-      - chrome
-      - firefox
-    environment:
-      - BROWSER=chrome
-      - HUB_HOST=hub
-      - MODULE=searchmodule.xml
-    volumes:
-      - ./search-result2:/usr/share/dockerimage/test-output 
+      - ./output/search-result:/usr/share/dockerimage/test-output 
+  
   book-flight-module1:
     image: malatdocker/selenium-docker
     depends_on: 
@@ -49,15 +38,5 @@ services:
       - HUB_HOST=hub
       - MODULE=book-flight-module.xml
     volumes: 
-      - ./book-result1:/usr/share/dockerimage/test-output    
-  book-flight-module2:
-    image: malatdocker/selenium-docker
-    depends_on: 
-      - chrome
-      - firefox
-    environment: 
-      - BROWSER=chrome
-      - HUB_HOST=hub
-      - MODULE=book-flight-module.xml
-    volumes: 
-      - ./book-result2:/usr/share/dockerimage/test-output            
+      - ./output/book-result:/usr/share/dockerimage/test-output    
+  
