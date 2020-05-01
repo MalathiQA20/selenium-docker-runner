@@ -12,18 +12,52 @@ services:
       - HUB_HOST=hub   
   firefox:        
     image: selenium/node-firefox:3.14
+    shm_size: '1gb'
     depends_on:
       - hub
     environment:
       - HUB_HOST=hub  
-  searchmodule:
+  searchmodule1:
     image: malatdocker/selenium-docker
     depends_on:
       - chrome
       - firefox
-    environment
+    environment:
+      - BROWSER=firefox
+      - HUB_HOST=hub
+      - MODULE=searchmodule.xml
+    volumes:
+      - ./search-result1:/usr/share/dockerimage/test-output 
+  searchmodule2:
+    image: malatdocker/selenium-docker
+    depends_on:
+      - chrome
+      - firefox
+    environment:
       - BROWSER=chrome
       - HUB_HOST=hub
       - MODULE=searchmodule.xml
     volumes:
-      - ./search-result:/usr/share/dockerimage/test-output       
+      - ./search-result2:/usr/share/dockerimage/test-output 
+  book-flight-module1:
+    image: malatdocker/selenium-docker
+    depends_on: 
+      - chrome
+      - firefox
+    environment: 
+      - BROWSER=chrome
+      - HUB_HOST=hub
+      - MODULE=book-flight-module.xml
+    volumes: 
+      - ./book-result1:/usr/share/dockerimage/test-output    
+  book-flight-module2:
+    image: malatdocker/selenium-docker
+    depends_on: 
+      - chrome
+      - firefox
+    environment: 
+      - BROWSER=chrome
+      - HUB_HOST=hub
+      - MODULE=book-flight-module.xml
+    volumes: 
+      - ./book-result2:/usr/share/dockerimage/test-output            
